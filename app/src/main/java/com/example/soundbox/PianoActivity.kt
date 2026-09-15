@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class PianoActivity : AppCompatActivity() {
 
     private lateinit var engine: AudioEngine
     private lateinit var statusText: TextView
@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_piano)
 
-        engine = AudioEngine()
+        engine = (application as SoundBoxApp).audioEngine
 
         val piano = findViewById<PianoView>(R.id.piano)
         piano.onNoteOn = { midi -> engine.noteOn(midi) }
@@ -34,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         btnRecord = findViewById(R.id.btnRecord)
         val btnPlay = findViewById<Button>(R.id.btnPlay)
         val btnExport = findViewById<Button>(R.id.btnExport)
+
+        // Dong bo UI theo trang thai engine (khi xoay man hinh)
+        if (engine.isRecording) {
+            btnRecord.text = "⏹ Dừng"
+            statusText.text = "Đang ghi... đánh đàn đi!"
+        }
 
         btnRecord.setOnClickListener {
             if (engine.isRecording) {
@@ -101,16 +107,11 @@ class MainActivity : AppCompatActivity() {
                 savedPath = file.absolutePath
             }
 
-            statusText.text = "Da luu: $savedPath"
-            Toast.makeText(this, "Xuat WAV thanh cong", Toast.LENGTH_LONG).show()
+            statusText.text = "Đã lưu: $savedPath"
+            Toast.makeText(this, "Xuất WAV thành công", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
-            statusText.text = "Loi xuat file: ${e.message}"
-            Toast.makeText(this, "Loi: ${e.message}", Toast.LENGTH_LONG).show()
+            statusText.text = "Lỗi xuất file: ${e.message}"
+            Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_LONG).show()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        engine.release()
     }
 }
