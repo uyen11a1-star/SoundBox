@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.SoundBox" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#FFEB3B</item>
+        <item name="colorPrimaryVariant">#FBC02D</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#FF9800</item>
+        <item name="android:windowBackground">#111111</item>
+    </style>
+</resources>
