@@ -70,7 +70,7 @@ class DrumPadView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        if (currentStep in 0 until numSteps && cellRects[0][0].isNotEmpty()) {
+        if (currentStep in 0 until numSteps && !cellRects[0][0].isEmpty) {
             val left = cellRects[0][currentStep].left - 3f
             val right = cellRects[0][currentStep].right + 3f
             canvas.drawRect(left, 0f, right, height.toFloat(), colHighlightPaint)
